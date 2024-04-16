@@ -1,0 +1,87 @@
+#hello_div {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: blue;
+}
+.searchbar {
+  margin-left: 20px;
+  display: flex;
+}
+.popular-item {
+  background-color: #f5f5ee;
+  border: 2px solid #f26624;
+  margin: 15px;
+  border-radius: 15px;
+  padding: 15px;
+}
+.bg-base {
+  background-color: #f5f5ee;
+}
+.audience-card {
+  background-color: #f5f5ee;
+  padding: 15px;
+}
+
+.text-accent {
+  color: #f26624;
+}
+
+.hero {
+  padding: 15px;
+  margin-top: 25px;
+}
+
+.header {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.search-item {
+  background-color: #f5f5ee;
+  border: 2px solid #f26624;
+  margin: 15px;
+  border-radius: 15px;
+  padding-left: 25px;
+  padding: 20px;
+}
+
+mark {
+  background-color: #f26624;
+  color: white;
+  border-radius: 5px;
+}
+
+.error {
+  font-size: small;
+  color: red;
+}
+
+.view-header {
+  background-color: #eeeeee;
+  padding: 15px;
+  padding-bottom: 0px;
+  border-radius: 15px;
+  margin-bottom: 45px;
+}
+
+.text-gray {
+  color: #979797;
+}
+
+.success-msg {
+  color: green;
+  background-color: #97ffac;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.startup-form {
+  padding: 15px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: 70px;
+  margin-right: 70px;
+  border-radius: 5px;
+  background-color: #f5f5ee;
+}

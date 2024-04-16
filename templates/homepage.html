@@ -1,0 +1,16 @@
+{% extends "layout.html" %} {% block content %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename = 'homepage.js') }}"
+></script>
+<body>
+  <div class="row hero">
+    <div class="col">
+      <h1>Welcome to <span class="text-accent">Rock Climbing Quiz</span></h1>
+    </div>
+  </div>
+
+  <div id="popular-items" class="row"></div>
+</body>
+
+{% endblock %}
