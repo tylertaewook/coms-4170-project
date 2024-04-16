@@ -3,6 +3,7 @@
   padding-bottom: 10px;
   color: blue;
 }
+
 .searchbar {
   margin-left: 20px;
   display: flex;
@@ -29,6 +30,9 @@
 .hero {
   padding: 15px;
   margin-top: 25px;
+  margin-left: 100px;
+  margin-right: 100px;
+  text-align: center;
 }
 
 .header {
