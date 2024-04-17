@@ -5,11 +5,11 @@ app = Flask(__name__)
 
 # TODO: store images somewhere non local
 hold_images = {
-   "jug": ["jug0.jpg","jug1.jpg"],
-   "crimp": ["crimp0.jpg","crimp1.jpg"],
-   "sloper": ["sloper0.jpg","sloper1.jpg"],
-   "pinch": ["pinch0.jpg","pinch1.jpg"],
-   "pocket": ["pocket0.jpg","pocket1.jpg"]
+   "jug": ["jug/jug0.jpg","jug/jug1.jpg"],
+   "crimp": ["crimp/crimp0.jpg","crimp/crimp1.jpg"],
+   "sloper": ["sloper/sloper0.jpg","sloper/sloper1.jpg"],
+   "pinch": ["pinch/pinch0.jpg","pinch/pinch1.jpg"],
+   "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg"]
 }
 
 explanations = {
@@ -78,16 +78,16 @@ lessons = [
 def welcome():
    return render_template('homepage.html')   
 
-@app.route('/learn/<id>')
-def learn():
+@app.route('/lesson/<id>')
+def lesson(id=0):
    global lessons
    global hold_images
    global explanations
 
-   if id >= len(lessons):
+   if int(id) >= len(lessons):
       return "Lesson Not Found"
    
-   lesson = lessons[id]
+   lesson = lessons[int(id)]
    if lesson["lesson_type"] == "question":
       # TODO: replace this with a function that randomly selects images and question type
       # for the initial prototype, just use a multi select w/ 2 correct answers

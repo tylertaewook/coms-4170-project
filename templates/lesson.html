@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="{{url_for('static', filename='lesson.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='lesson.css')}}" />
+<script>
+    let lesson = {{ lesson | tojson}}
+</script>
+
+<div>
+    <!-- TODO: change to progress bar -->
+    <!-- Progress -->
+    <div class="row">
+        <!-- TODO: pass the number of lessons in somewhere -->
+        {{ lesson.id + 1 }} / 10 
+    </div>
+
+    <!-- Title text -->
+    <div class="row">
+        {{  lesson.title }}
+    </div>
+
+    <!-- Body -->
+    <div class="row">
+        {% if lesson.lesson_type == 'explain' %}
+        <div>
+            {{ lesson.body.text }}
+        </div>
+
+        {% else %}
+        <div>
+            <!-- TODO: incorporate diff question types -->
+            <!-- TODO: dynamically generate the image positions w/ randomization -->
+            <div class="row">
+                <div id="option-1" class="col-6 answer-option" data-correct="">
+                    <img src="../static/images/{{ lesson.body.correct[0] }}"/>
+                </div>
+                <div id="option-2" class="col-6 answer-option" data-correct="">
+                    <img src="../static/images/{{ lesson.body.correct[1] }}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div id="option-3" class="col-6 answer-option">
+                    <img src="../static/images/{{ lesson.body.incorrect[0] }}"/>
+                </div>
+                <div id="option-4" class="col-6 answer-option">
+                    <img src="../static/images/{{ lesson.body.incorrect[1] }}"/>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="row">
+        <!-- Back button -->
+        <div>
+            <button id="back-btn">Back</button>
+        </div>
+
+        <!-- Next/prev button -->
+        <div>
+            <button id="next-btn">Next</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
