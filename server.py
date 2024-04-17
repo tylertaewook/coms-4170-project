@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, abort, jsonify
 import re
+import random
 app = Flask(__name__)
 
 
@@ -78,6 +79,17 @@ lessons = [
 def welcome():
    return render_template('homepage.html')   
 
+def selectRandomCorrect(hold_type, num=2):
+   return random.sample(hold_images[hold_type], num)
+
+
+def selectRandomIncorrect(hold_type, num=2):
+   global hold_images
+   incorrect_imgs = sum([hold_images[key] for key in hold_images if key != hold_type], [])
+   print(incorrect_imgs)
+   return random.sample(incorrect_imgs, num)
+
+
 @app.route('/lesson/<id>')
 def lesson(id=0):
    global lessons
@@ -89,21 +101,21 @@ def lesson(id=0):
    
    lesson = lessons[int(id)]
    if lesson["lesson_type"] == "question":
-      # TODO: replace this with a function that randomly selects images and question type
+      # TODO: replace this with a function that randomly selects question type
       # for the initial prototype, just use a multi select w/ 2 correct answers
-      lesson["title"] = f'Select holds that look like {lesson["hold_type"]}s'
+      lesson["title"] = f'Select holds that look like {lesson["hold_type"].capitalize()}s'
       lesson["body"] = {
-         "correct": [hold_images[lesson["hold_type"]][0], hold_images[lesson["hold_type"]][1]],
-         "incorrect": [hold_images["sloper"][0], hold_images["crimp"][0]]
+         "correct": selectRandomCorrect(lesson["hold_type"]),
+         "incorrect": selectRandomIncorrect(lesson["hold_type"])
       }
    else:
-      lesson["title"] = lesson["hold_type"]
+      lesson["title"] = lesson["hold_type"].capitalize()
       lesson["body"] = {
          "text": explanations[lesson["hold_type"]],
          # TODO: add video field
       }
    
-   return render_template('lesson.html', lesson=lesson)
+   return render_template('lesson.html', lesson=lesson, num_lessons=len(lessons))
    
 if __name__ == '__main__':
    app.run(debug = True)

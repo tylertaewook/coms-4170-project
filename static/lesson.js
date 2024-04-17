@@ -7,6 +7,24 @@ function answerSelected() {
     return res;
 }
 
+function shuffle(array) {
+    let currentIndex = array.length;
+    while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+}
+
+function generateImagePositions() {
+    let allQs = lesson.body.correct.concat(lesson.body.incorrect);
+    shuffle(allQs);
+    $('.answer-col').each(function (i, obj) {
+        let img = $(`<img class="answer-option" src="../static/images/${allQs[i]}"${lesson.body.correct.includes(allQs[i]) ? "data-correct" : ""}/>`)
+        $(this).append(img);
+    });
+}
+
 function isResultScreen() {
     return $('.answer-option').length == 0;
 }
@@ -41,7 +59,12 @@ function displayAnswerResults() {
 }
 
 $(document).ready(function () {
+    // on startup
     $("#next-btn").prop("disabled", isNextDisabled());
+    if (lesson.lesson_type == "question") {
+        generateImagePositions();
+    }
+
     // go to previous lesson page or go back to the home page
     $("#back-btn").click(function () {
         if (lesson.id > 0) {

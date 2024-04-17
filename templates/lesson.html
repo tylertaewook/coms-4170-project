@@ -11,18 +11,18 @@
 <div>
     <!-- TODO: change to progress bar -->
     <!-- Progress -->
-    <div class="row">
+    <div class="row mb-2 d-flex justify-content-center">
         <!-- TODO: pass the number of lessons in somewhere -->
-        {{ lesson.id + 1 }} / 10 
+        {{ lesson.id + 1 }} / {{ num_lessons }} 
     </div>
 
     <!-- Title text -->
-    <div class="row">
-        {{  lesson.title }}
+    <div class="row mb-2 d-flex justify-content-center">
+        <h2> {{ lesson.title }} </h2>
     </div>
 
     <!-- Body -->
-    <div class="row">
+    <div class="row mb-2 d-flex justify-content-center">
         {% if lesson.lesson_type == 'explain' %}
         <div>
             {{ lesson.body.text }}
@@ -31,21 +31,16 @@
         {% else %}
         <div>
             <!-- TODO: incorporate diff question types -->
-            <!-- TODO: dynamically generate the image positions w/ randomization -->
-            <div class="row">
-                <div id="option-1" class="col-6 answer-option" data-correct="">
-                    <img src="../static/images/{{ lesson.body.correct[0] }}"/>
+            <div class="row mb-1">
+                <div class="col-6 answer-col">
                 </div>
-                <div id="option-2" class="col-6 answer-option" data-correct="">
-                    <img src="../static/images/{{ lesson.body.correct[1] }}"/>
+                <div class="col-6 answer-col">
                 </div>
             </div>
-            <div class="row">
-                <div id="option-3" class="col-6 answer-option">
-                    <img src="../static/images/{{ lesson.body.incorrect[0] }}"/>
+            <div class="row mb-1">
+                <div class="col-6 answer-col">
                 </div>
-                <div id="option-4" class="col-6 answer-option">
-                    <img src="../static/images/{{ lesson.body.incorrect[1] }}"/>
+                <div class="col-6 answer-col">
                 </div>
             </div>
         </div>
@@ -54,15 +49,15 @@
     </div>
 
     <!-- Bottom bar -->
-    <div class="row">
+    <div class="row mb-2">
         <!-- Back button -->
-        <div>
-            <button id="back-btn">Back</button>
+        <div class="col-6 d-flex justify-content-center">
+            <button id="back-btn" class="btn btn-secondary">Back</button>
         </div>
 
         <!-- Next/prev button -->
-        <div>
-            <button id="next-btn">Next</button>
+        <div class="col-6 d-flex justify-content-center">
+            <button id="next-btn" class="btn btn-primary ">Next</button>
         </div>
     </div>
 </div>
