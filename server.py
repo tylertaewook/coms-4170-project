@@ -3,6 +3,7 @@ import re
 import random
 app = Flask(__name__)
 
+last_time = 0
 
 # TODO: store images somewhere non local
 hold_images = {
@@ -145,6 +146,19 @@ def lesson(id=0):
       }
    
    return render_template('lesson.html', lesson=lesson, num_lessons=len(lessons))
+
+@app.route('/datetime', methods=['GET', 'POST'])
+def datetime():
+    global last_time
+
+    json_data = request.get_json()
+    time = json_data['time']
+    if json_data['start']:
+       last_time = time
+       return jsonify({})
+    
+   #  sends the time elapsed in ms
+    return jsonify(time - last_time)
 
 @app.route('/quiz/<id>')
 def quiz(id=0):

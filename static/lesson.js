@@ -43,6 +43,7 @@ function nextLesson() {
     if (lesson.id < 9) {
         window.location.href = `/lesson/${lesson.id + 1}`;
     } else {
+        sendDatetime(false);
         window.location.href = "/";
     }
 }
@@ -58,11 +59,40 @@ function displayAnswerResults() {
     });
 }
 
+function sendDatetime(start) {
+    var datetime = Date.now();
+    let data = {
+        'start': start,
+        'time': datetime
+    };
+    $.ajax({
+        type: "POST",
+        url: "/datetime",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (request, status, error) {
+            console.log("Error");
+            console.log(request);
+            console.log(status);
+            console.log(error);
+        }
+    });
+}
+
 $(document).ready(function () {
     // on startup
-    $("#next-btn").prop("disabled", isNextDisabled());
     if (lesson.lesson_type == "question") {
         generateImagePositions();
+    }
+    $("#next-btn").prop("disabled", isNextDisabled());
+    
+    // Send start time
+    if (lesson.id == 0) {
+        sendDatetime(true);
     }
 
     // go to previous lesson page or go back to the home page
