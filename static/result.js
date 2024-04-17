@@ -20,10 +20,10 @@ function resetScore() {
 }
 
 $(document).ready(function () {
-    $("#learn-btn").click(function () {
-        window.location.href = "/lesson/0";
+    $("#home-btn").click(function () {
+        window.location.href = "/";
     });
-    $("#quiz-btn").click(function () {
+    $("#retry-btn").click(function () {
         resetScore();
         window.location.href = "/quiz/0";
     });

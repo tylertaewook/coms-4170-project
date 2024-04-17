@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="{{url_for('static', filename='result.js')}}"></script>
+
+<!-- Score display -->
+<div class="row d-flex justify-content-center">
+    <h2> {{ score }} / {{ max }} </h2>
+</div>
+
+<!-- TODO: some feedback image -->
+
+<!-- Go home, or retry -->
+<div class="row mb-2">
+    <!-- Back button -->
+    <div class="col-6 d-flex justify-content-center">
+        <button id="home-btn" class="btn btn-secondary">Home</button>
+    </div>
+
+    <!-- Next/prev button -->
+    <div class="col-6 d-flex justify-content-center">
+        <button id="retry-btn" class="btn btn-secondary ">Retake</button>
+    </div>
+</div>
+
+{% endblock %}

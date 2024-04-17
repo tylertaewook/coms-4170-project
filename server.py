@@ -4,6 +4,8 @@ import random
 app = Flask(__name__)
 
 last_time = 0
+cur_score = 0
+cur_max = 0
 
 # TODO: store images somewhere non local
 hold_images = {
@@ -160,21 +162,51 @@ def datetime():
    #  sends the time elapsed in ms
     return jsonify(time - last_time)
 
+@app.route('/updateScore', methods=['GET', 'POST'])
+def updateScore():
+   global cur_score
+   global cur_max
+
+   json_data = request.get_json()
+   cur_score += json_data['score']
+   cur_max += json_data['maxScore']
+
+    
+   #  sends the current and max score
+   return jsonify({ 'score': cur_score, 'max': cur_max })
+
+@app.route('/resetScore', methods=['GET', 'POST'])
+def resetScore():
+   global cur_score
+   global cur_max
+
+   cur_score = 0
+   cur_max = 0
+
+   #  sends the current and max score
+   return jsonify({ 'score': cur_score, 'max': cur_max })
+
 @app.route('/quiz/<id>')
 def quiz(id=0):
    global questions
    global hold_images
+   global cur_score
+   global cur_max
 
    question = questions[int(id)]
    if question["question_type"] == "select_image":
       question["title"] = f'Select holds that look like {question["hold_type"].capitalize()}s'
       question["body"] = {
-         "correct": selectRandomCorrect(lesson["hold_type"]),
-         "incorrect": selectRandomIncorrect(lesson["hold_type"])
+         "correct": selectRandomCorrect(question["hold_type"]),
+         "incorrect": selectRandomIncorrect(question["hold_type"])
       }
    # TODO: add slightly different structures for different question types
 
-   return render_template('quiz.html', question=question, num_questions=len(questions))
+   return render_template('quiz.html', question=question, num_questions=len(questions), cur_score=cur_score, cur_max=cur_max)
+
+@app.route('/result')
+def result():
+   return render_template("result.html", score=cur_score, max=cur_max)
    
 if __name__ == '__main__':
    app.run(debug = True)
