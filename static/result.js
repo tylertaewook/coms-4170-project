@@ -18,6 +18,10 @@ function resetScore() {
         }
     });
 }
+// Display time 
+//document.getElementById("displayTime").innerHTML = timeToString(yourTimeData);
+
+
 
 $(document).ready(function () {
     $("#home-btn").click(function () {

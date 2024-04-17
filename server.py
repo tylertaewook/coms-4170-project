@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, abort, jsonify
+from datetime import datetime
 import re
 import random
 app = Flask(__name__)
@@ -6,6 +7,8 @@ app = Flask(__name__)
 last_time = 0
 cur_score = 0
 cur_max = 0
+start_time = None
+end_time = None
 
 # TODO: store images somewhere non local
 hold_images = {
@@ -149,18 +152,18 @@ def lesson(id=0):
    
    return render_template('lesson.html', lesson=lesson, num_lessons=len(lessons))
 
-@app.route('/datetime', methods=['GET', 'POST'])
-def datetime():
-    global last_time
+# @app.route('/datetime', methods=['GET', 'POST'])
+# def datetime():
+#     global last_time
 
-    json_data = request.get_json()
-    time = json_data['time']
-    if json_data['start']:
-       last_time = time
-       return jsonify({})
+#     json_data = request.get_json()
+#     time = json_data['time']
+#     if json_data['start']:
+#        last_time = time
+#        return jsonify({})
     
-   #  sends the time elapsed in ms
-    return jsonify(time - last_time)
+#    #  sends the time elapsed in ms
+#     return jsonify(time - last_time)
 
 @app.route('/updateScore', methods=['GET', 'POST'])
 def updateScore():
@@ -179,10 +182,11 @@ def updateScore():
 def resetScore():
    global cur_score
    global cur_max
+   global start_time
 
    cur_score = 0
    cur_max = 0
-
+   start_time = None 
    #  sends the current and max score
    return jsonify({ 'score': cur_score, 'max': cur_max })
 
@@ -192,6 +196,11 @@ def quiz(id=0):
    global hold_images
    global cur_score
    global cur_max
+   global start_time
+   id = int(id)
+
+   if id == 0: 
+        start_time = datetime.now()
 
    question = questions[int(id)]
    if question["question_type"] == "select_image":
@@ -206,7 +215,19 @@ def quiz(id=0):
 
 @app.route('/result')
 def result():
-   return render_template("result.html", score=cur_score, max=cur_max)
+   global start_time
+   global end_time
+   global cur_score
+   global cur_max
+
+   end_time = datetime.now()
+   duration = (end_time - start_time).total_seconds() if start_time else 0
+   duration_str = str(int(duration // 3600)).zfill(2) + ":" + str(int((duration % 3600) // 60)).zfill(2) + ":" + str(int(duration % 60)).zfill(2)
+
+
+   return render_template("result.html", score=cur_score, max=cur_max, duration=duration_str)
+  
+
    
 if __name__ == '__main__':
    app.run(debug = True)
