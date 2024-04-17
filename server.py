@@ -74,6 +74,34 @@ lessons = [
    }
 ]
 
+questions = [
+   {
+      "id": 0,
+      "question_type": "select_image",
+      "hold_type": "jug"
+   },
+   {
+      "id": 1,
+      "question_type": "select_image",
+      "hold_type": "crimp"
+   },
+   {
+      "id": 2,
+      "question_type": "select_image",
+      "hold_type": "sloper"
+   },
+   {
+      "id": 3,
+      "question_type": "select_image",
+      "hold_type": "pinch"
+   },
+   {
+      "id": 4,
+      "question_type": "select_image",
+      "hold_type": "pocket"
+   },
+]
+
 
 @app.route('/')
 def welcome():
@@ -102,6 +130,7 @@ def lesson(id=0):
    lesson = lessons[int(id)]
    if lesson["lesson_type"] == "question":
       # TODO: replace this with a function that randomly selects question type
+      # this will probably reuse the code for the quiz portion when fully fleshed out
       # for the initial prototype, just use a multi select w/ 2 correct answers
       lesson["title"] = f'Select holds that look like {lesson["hold_type"].capitalize()}s'
       lesson["body"] = {
@@ -116,6 +145,22 @@ def lesson(id=0):
       }
    
    return render_template('lesson.html', lesson=lesson, num_lessons=len(lessons))
+
+@app.route('/quiz/<id>')
+def quiz(id=0):
+   global questions
+   global hold_images
+
+   question = questions[int(id)]
+   if question["question_type"] == "select_image":
+      question["title"] = f'Select holds that look like {question["hold_type"].capitalize()}s'
+      question["body"] = {
+         "correct": selectRandomCorrect(lesson["hold_type"]),
+         "incorrect": selectRandomIncorrect(lesson["hold_type"])
+      }
+   # TODO: add slightly different structures for different question types
+
+   return render_template('quiz.html', question=question, num_questions=len(questions))
    
 if __name__ == '__main__':
    app.run(debug = True)
