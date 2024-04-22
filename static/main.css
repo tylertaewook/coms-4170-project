@@ -131,3 +131,23 @@ mark {
   color: #f26624;
   background-color: #f5f5ee;
 }
+
+.results-container {
+  max-width: 800px;
+  margin: auto;
+  padding-top: 50px;
+}
+.score-display .score-value, .score-display .max-value {
+  color: #f26624; 
+}
+.time-result {
+  font-size: 1.5em;
+  color: #000000; /* info color */
+}
+.btn {
+  width: 150px; /* uniform button size */
+}
+
+.btn-home {
+  background-color: #f26624; 
+}

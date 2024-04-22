@@ -1,32 +1,68 @@
 {% extends "layout.html" %} {% block content %}
 
+<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
 <script src="{{url_for('static', filename='result.js')}}"></script>
 
 <!-- Score display -->
-<div class="row d-flex justify-content-center">
+<!-- <div class="row d-flex justify-content-center">
   <h2>{{ score }} / {{ max }}</h2>
-</div>
+</div> -->
 
 <!--Time Display-->
-<div id="displayTime" class="time-result">00:00:00</div>
+<!-- <div id="displayTime" class="time-result">00:00:00</div>
 
 <div>
   <h2>Time Taken: {{ duration }}</h2>
-</div>
+</div> -->
 
 <!-- TODO: some feedback image -->
 
 <!-- Go home, or retry -->
-<div class="row mb-2">
+<!-- <div class="row mb-2"> -->
   <!-- Back button -->
-  <div class="col-6 d-flex justify-content-center">
+  <!-- <div class="col-6 d-flex justify-content-center">
     <button id="home-btn" class="btn button-primary">Home</button>
-  </div>
+  </div> -->
 
   <!-- Next/prev button -->
-  <div class="col-6 d-flex justify-content-center">
+  <!-- <div class="col-6 d-flex justify-content-center">
     <button id="retry-btn" class="btn button-secondary">Retake</button>
   </div>
+</div>  -->
+
+<div class="container results-container">
+  <!-- Score display -->
+  <div class="row d-flex justify-content-center mt-5">
+    <div class="col-12 text-center score-display">
+      <h2 class="display-4">Your Score: <span class="score-value">{{ score }}</span> / <span class="max-value">{{ max }}</span></h2>
+    </div>
+  </div>
+
+  <!-- Time Display -->
+  <div class="row d-flex justify-content-center my-4">
+    <div class="col-12 text-center">
+      <div id="displayTime" class="time-result">Time Taken: {{ duration }}</div>
+    </div>
+  </div>
+
+  <!-- TODO: some feedback image -->
+  <div class="row d-flex justify-content-center my-4">
+    <div class="col-12 text-center">
+      <!-- Placeholder for feedback image -->
+      <!-- <img src="{{ url_for('static', filename='feedback_image.png') }}" alt="Feedback Image" class="img-fluid"> -->
+    </div>
+  </div>
+
+  <!-- Go home, or retry -->
+  <div class="row my-4">
+    <div class="col-md-6 d-flex justify-content-end">
+      <button id="home-btn" class="btn btn-lg btn-home">Home</button>
+    </div>
+    <div class="col-md-6 d-flex justify-content-start">
+      <button id="retry-btn" class="btn btn-secondary btn-lg">Retake</button>
+    </div>
+  </div>
 </div>
+
 
 {% endblock %}
