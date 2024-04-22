@@ -12,11 +12,11 @@ end_time = None
 
 # TODO: store images somewhere non local
 hold_images = {
-   "jug": ["jug/jug0.jpg","jug/jug1.jpg"],
-   "crimp": ["crimp/crimp0.jpg","crimp/crimp1.jpg"],
-   "sloper": ["sloper/sloper0.jpg","sloper/sloper1.jpg"],
-   "pinch": ["pinch/pinch0.jpg","pinch/pinch1.jpg"],
-   "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg"]
+   "jug": ["jug/jug0.jpg","jug/jug1.jpg", "jug/jug2.jpg","jug/jug3.jpg"],
+   "crimp": ["crimp/crimp0.jpg","crimp/crimp1.jpg", "crimp/crimp2.jpg","crimp/crimp3.jpg"],
+   "sloper": ["sloper/sloper0.jpg","sloper/sloper1.jpg", "sloper/sloper2.jpg","sloper/sloper3.jpg"],
+   "pinch": ["pinch/pinch0.jpg","pinch/pinch1.jpg", "pinch/pinch2.jpg","pinch/pinch3.jpg"],
+   "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg", "pocket/pocket2.jpg","pocket/pocket3.jpg"]
 }
 
 hold_info = {
