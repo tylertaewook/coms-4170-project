@@ -72,6 +72,10 @@ mark {
   color: #979797;
 }
 
+.text-accent {
+  color: #f26624;
+}
+
 .success-msg {
   color: green;
   background-color: #97ffac;
@@ -80,12 +84,26 @@ mark {
   margin-bottom: 15px;
 }
 
-.startup-form {
-  padding: 15px;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  margin-left: 70px;
-  margin-right: 70px;
+.button-primary {
+  background-color: #f26624;
+  color: white;
+  padding: 10px;
   border-radius: 5px;
-  background-color: #f5f5ee;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button-secondary {
+  background-color: #ffffff;
+  color: #f26624;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.justify-begin {
+  justify-content: flex-start;
 }
