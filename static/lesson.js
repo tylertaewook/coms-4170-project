@@ -83,11 +83,31 @@ function sendDatetime(start) {
     });
 }
 
+
+function onYouTubeIframeAPIReady() {
+    var video = document.getElementById("video");
+    var player = new YT.Player('video', {
+        height: video.dataset.height,
+        width: video.dataset.width,
+        playerVars: {'autoplay': 1, 'controls': 0, 'rel': 0},
+        events: {
+        'onReady': function(e) {
+            e.target.cueVideoById({
+                videoId: lesson.body.video.id,
+                startSeconds: lesson.body.video.start,
+                endSeconds: lesson.body.video.end
+            });
+        }
+        }
+    });
+}
+
 $(document).ready(function () {
     // on startup
     if (lesson.lesson_type == "question") {
         generateImagePositions();
     }
+
     $("#next-btn").prop("disabled", isNextDisabled());
     
     // Send start time

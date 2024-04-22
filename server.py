@@ -19,12 +19,48 @@ hold_images = {
    "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg"]
 }
 
-explanations = {
-   "jug": "Jugs are big holds that you can get most of your hand around. Any holds that are comfortable and easy to grip are called jugs.",
-   "crimp": "Crimps are very small edges that can only fit a pad or two of your fingers.",
-   "sloper": "Slopers are bulgy holds that don't have a positive angle for your hand to grip down on.",
-   "pinch": "Pinches are exactly what they sound like - holds that you can pinch by engaging your fingers on one side and your thumb on the other.",
-   "pocket": "Pockets are holes or divots that you can typically only fit a few fingers in."
+hold_info = {
+   "jug": {
+      "explanation": "Jugs are big holds that you can get most of your hand around. Any holds that are comfortable and easy to grip are called jugs.",
+      "video-info" : {
+         "id" :"rPCS1dkiu3k",
+         "start": 128,
+         "end": 179
+      }
+   },
+   "crimp" :{
+      "explanation": "Crimps are very small edges that can only fit a pad or two of your fingers.",
+      "video-info" : {
+         "id" :"rPCS1dkiu3k",
+         "start": 281,
+         "end": 325
+      }
+   },
+   "sloper" :{
+      "explanation": "Slopers are bulgy holds that don't have a positive angle for your hand to grip down on.",
+      "video-info" : {
+         "id" :"rPCS1dkiu3k",
+         "start": 223,
+         "end": 279
+      }
+   },
+   "pinch" :{
+      "explanation": "Pinches are exactly what they sound like - holds that you can pinch by engaging your fingers on one side and your thumb on the other.",
+      "video-info" : {
+         "id" :"rPCS1dkiu3k",
+         "start": 367,
+         "end": 405
+      }
+   },
+   "pocket" :{
+      "explanation": "Pockets are holes or divots that you can typically only fit a few fingers in.",
+      "video-info" : {
+         "id" :"rPCS1dkiu3k",
+         "start": 407,
+         "end": 465
+      }
+   }
+
 }
 
 lessons = [
@@ -128,16 +164,13 @@ def selectRandomIncorrect(hold_type, num=2):
 def lesson(id=0):
    global lessons
    global hold_images
-   global explanations
+   global hold_info
 
    if int(id) >= len(lessons):
       return "Lesson Not Found"
    
    lesson = lessons[int(id)]
    if lesson["lesson_type"] == "question":
-      # TODO: replace this with a function that randomly selects question type
-      # this will probably reuse the code for the quiz portion when fully fleshed out
-      # for the initial prototype, just use a multi select w/ 2 correct answers
       lesson["title"] = f'Select holds that look like {lesson["hold_type"].capitalize()}s'
       lesson["body"] = {
          "correct": selectRandomCorrect(lesson["hold_type"]),
@@ -146,8 +179,8 @@ def lesson(id=0):
    else:
       lesson["title"] = lesson["hold_type"].capitalize()
       lesson["body"] = {
-         "text": explanations[lesson["hold_type"]],
-         # TODO: add video field
+         "text": hold_info[lesson["hold_type"]]["explanation"],
+         "video": hold_info[lesson["hold_type"]]["video-info"]
       }
    
    return render_template('lesson.html', lesson=lesson, num_lessons=len(lessons))
@@ -173,7 +206,6 @@ def updateScore():
    json_data = request.get_json()
    cur_score += json_data['score']
    cur_max += json_data['maxScore']
-
     
    #  sends the current and max score
    return jsonify({ 'score': cur_score, 'max': cur_max })

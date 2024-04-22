@@ -1,5 +1,6 @@
 {% extends "layout.html" %} {% block content %}
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="{{url_for('static', filename='lesson.js')}}"></script>
 <link rel="stylesheet" href="{{url_for('static', filename='lesson.css')}}" />
 <script>
@@ -7,6 +8,7 @@
 </script>
 
 <div class="viewboard">
+  <!-- Progress bar -->
   <div class="progress">
     <div
       class="progress-bar bg-success"
@@ -28,6 +30,11 @@
   <!-- Body -->
   <div class="row mb-2 d-flex justify-content-center">
     {% if lesson.lesson_type == 'explain' %}
+
+    <!-- YouTube Video -->
+    <div id="video" data-height="480" data-width="640">
+    </div>
+
     <div>{{ lesson.body.text }}</div>
 
     {% else %}
