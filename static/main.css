@@ -9,7 +9,7 @@
   display: flex;
 }
 .popular-item {
-  background-color: #f5f5ee;
+  background-color: #ffffff;
   border: 2px solid #f26624;
   margin: 15px;
   border-radius: 15px;
@@ -18,15 +18,19 @@
 .bg-base {
   background-color: #f5f5ee;
 }
+.bg-lightgray {
+  background-color: #dedede;
+}
 .audience-card {
   background-color: #f5f5ee;
   padding: 15px;
 }
-
 .text-accent {
   color: #f26624;
 }
-
+.text-darkgray {
+  color: #6f6f6f;
+}
 .hero {
   padding: 15px;
   margin-top: 25px;
@@ -86,7 +90,7 @@ mark {
 
 .button-primary {
   background-color: #f26624;
-  color: white;
+  color: #f5f5ee;
   padding: 10px;
   border-radius: 5px;
   border: none;
@@ -95,7 +99,7 @@ mark {
 }
 
 .button-secondary {
-  background-color: #ffffff;
+  background-color: #f5f5ee;
   color: #f26624;
   padding: 10px;
   border-radius: 5px;
@@ -106,4 +110,24 @@ mark {
 
 .justify-begin {
   justify-content: flex-start;
+}
+
+.answer-option {
+  background-color: #ffffff;
+  border: 2px solid #f26624;
+  margin: 15px;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.viewboard {
+  width: 50%;
+  margin: auto;
+}
+
+.progress {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #f26624;
+  background-color: #f5f5ee;
 }

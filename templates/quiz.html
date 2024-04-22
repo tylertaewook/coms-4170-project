@@ -1,66 +1,66 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 
 <script src="{{url_for('static', filename='quiz.js')}}"></script>
 <link rel="stylesheet" href="{{url_for('static', filename='lesson.css')}}" />
 <script>
-    let question = {{ question | tojson}}
+  let question = {{ question | tojson}}
 </script>
 
-<div>
-    <!-- TODO: change to progress bar -->
-    <!-- Progress -->
-    <div class="row mb-2 d-flex justify-content-center">
-        <!-- Score -->
-        <div class="col-6 d-flex justify-content-center">
-            Score: {{ cur_score }} / {{ cur_max }}
-        </div>
+<div class="viewboard">
+  <!-- TODO: change to progress bar -->
+  <!-- Progress -->
+  <!-- Score -->
+  <div class="col-6 d-flex justify-content-center">
+    Score: {{ cur_score }} / {{ cur_max }}
+  </div>
 
-        <!-- Progress -->
-        <div class="col-6 d-flex justify-content-center">
-            Progress: {{ question.id + 1 }} / {{ num_questions }} 
-        </div>
-        
+  <!-- Progress -->
+  <div class="progress">
+    <div
+      class="progress-bar bg-info"
+      role="progressbar"
+      style="width: {{ (question.id + 1) / num_questions * 100 }}%;"
+      aria-valuenow="{{ question.id + 1 }}"
+      aria-valuemin="0"
+      aria-valuemax="{{ num_questions }}"
+    >
+      {{ question.id + 1 }} / {{ num_questions }}
+    </div>
+  </div>
+  <div class="row mb-2 d-flex justify-content-center"></div>
+
+  <!-- Title text -->
+  <div class="row mb-2 d-flex justify-content-center">
+    <h2>{{ question.title }}</h2>
+  </div>
+
+  <!-- Body -->
+  <div class="row mb-2 d-flex justify-content-center">
+    <div>
+      <!-- TODO: incorporate diff question types -->
+      <div class="row mb-1">
+        <div class="col-6 answer-col"></div>
+        <div class="col-6 answer-col"></div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-6 answer-col"></div>
+        <div class="col-6 answer-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="row mb-2">
+    <!-- Back button -->
+    <div class="col-6 d-flex justify-content-center">
+      <!-- <button id="back-btn" class="btn btn-secondary">Back</button> -->
     </div>
 
-    <!-- Title text -->
-    <div class="row mb-2 d-flex justify-content-center">
-        <h2> {{ question.title }} </h2>
+    <!-- Next/prev button -->
+    <div class="col-6 d-flex justify-content-center">
+      <button id="next-btn" class="btn button-primary">Next</button>
     </div>
-
-    <!-- Body -->
-    <div class="row mb-2 d-flex justify-content-center">
-        <div>
-            <!-- TODO: incorporate diff question types -->
-            <div class="row mb-1">
-                <div class="col-6 answer-col">
-                </div>
-                <div class="col-6 answer-col">
-                </div>
-            </div>
-            <div class="row mb-1">
-                <div class="col-6 answer-col">
-                </div>
-                <div class="col-6 answer-col">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom bar -->
-    <div class="row mb-2">
-        <!-- Back button -->
-        <div class="col-6 d-flex justify-content-center">
-            <!-- <button id="back-btn" class="btn btn-secondary">Back</button> -->
-        </div>
-
-        <!-- Next/prev button -->
-        <div class="col-6 d-flex justify-content-center">
-            <button id="next-btn" class="btn btn-primary ">Next</button>
-        </div>
-    </div>
+  </div>
 </div>
-
 
 {% endblock %}
