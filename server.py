@@ -16,7 +16,8 @@ hold_images = {
    "crimp": ["crimp/crimp0.jpg","crimp/crimp1.jpg", "crimp/crimp2.jpg","crimp/crimp3.jpg"],
    "sloper": ["sloper/sloper0.jpg","sloper/sloper1.jpg", "sloper/sloper2.jpg","sloper/sloper3.jpg"],
    "pinch": ["pinch/pinch0.jpg","pinch/pinch1.jpg", "pinch/pinch2.jpg","pinch/pinch3.jpg"],
-   "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg", "pocket/pocket2.jpg","pocket/pocket3.jpg"]
+   "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg", "pocket/pocket2.jpg","pocket/pocket3.jpg"],
+   "undercling": ["undercling/undercling0.jpg","undercling/undercling1.jpg", "undercling/undercling2.jpg","undercling/undercling3.jpg"]
 }
 
 compound_images = [

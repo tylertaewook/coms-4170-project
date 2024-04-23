@@ -40,7 +40,7 @@ function isNextDisabled() {
 }
 
 function nextLesson() {
-    if (lesson.id < 9) {
+    if (lesson.id < num_lessons-1) {
         window.location.href = `/lesson/${lesson.id + 1}`;
     } else {
         sendDatetime(false);
