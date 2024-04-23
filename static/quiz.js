@@ -13,7 +13,7 @@ function generateImagePositions() {
     let allQs = question.body.correct.concat(question.body.incorrect);
     shuffle(allQs);
     $('.answer-col').each(function (i, obj) {
-        let img = $(`<img class="answer-option" src="../static/images/${allQs[i]}"${question.body.correct.includes(allQs[i]) ? "data-correct" : ""}/>`)
+        let img = $(`<img class="image-select answer-option" src="../static/images/${allQs[i]}"${question.body.correct.includes(allQs[i]) ? "data-correct" : ""}/>`)
         $(this).append(img);
     });
 }

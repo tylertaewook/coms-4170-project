@@ -20,7 +20,7 @@ function generateImagePositions() {
     let allQs = lesson.body.correct.concat(lesson.body.incorrect);
     shuffle(allQs);
     $('.answer-col').each(function (i, obj) {
-        let img = $(`<img class="answer-option" src="../static/images/${allQs[i]}"${lesson.body.correct.includes(allQs[i]) ? "data-correct" : ""}/>`)
+        let img = $(`<img class="image-select answer-option" src="../static/images/${allQs[i]}"${lesson.body.correct.includes(allQs[i]) ? "data-correct" : ""}/>`)
         $(this).append(img);
     });
 }
@@ -35,7 +35,6 @@ function isNextDisabled() {
         return false;
     }
 
-    // TODO: incorporate checks on other question formats
     return !answerSelected();
 }
 
