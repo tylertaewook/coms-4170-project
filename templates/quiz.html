@@ -32,7 +32,7 @@
 
   <!-- Title text -->
   <div class="row mb-2 d-flex justify-content-center">
-    <h2>{{ question.title }}</h2>
+    <h2 id="font-design">{{ question.title }}</h2>
   </div>
 
   <!-- Body -->
@@ -57,7 +57,7 @@
       <div class="row mb-1">
         <div class="col d-flex justify-content-center">
             <div class="mr-1">
-              Left: 
+              Left:
             </div>
             <select id="left-dropdown">
               {% for option in question.body.options %}
@@ -67,7 +67,7 @@
         </div>
         <div class="col d-flex justify-content-center">
             <div class="mr-1">
-              Right: 
+              Right:
             </div>
             <select id="right-dropdown">
               {% for option in question.body.options %}
@@ -87,7 +87,7 @@
       </div>
 
       {% else %}
-      
+
       <!-- TODO: add more question types -->
       {% endif %}
 

@@ -1,3 +1,7 @@
+#font-design{
+  font-family: sans-serif;
+}
+
 #hello_div {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -138,7 +142,7 @@ mark {
   padding-top: 50px;
 }
 .score-display .score-value, .score-display .max-value {
-  color: #f26624; 
+  color: #f26624;
 }
 .time-result {
   font-size: 1.5em;
@@ -149,5 +153,5 @@ mark {
 }
 
 .btn-home {
-  background-color: #f26624; 
+  background-color: #f26624;
 }
