@@ -1,11 +1,4 @@
-function answerSelected() {
-    let res = false;
-    $('.answer-option').each(function (i, obj) {
-        res = res || $(this).hasClass("selected-answer");
-    });
-
-    return res;
-}
+let isResultScreen = false;
 
 function shuffle(array) {
     let currentIndex = array.length;
@@ -25,45 +18,96 @@ function generateImagePositions() {
     });
 }
 
-function isResultScreen() {
-    return $('.answer-option').length == 0;
+function loadQuestion() {
+    switch(question.question_type) {
+        case "select_images":
+            generateImagePositions();
+            break;
+        case "dropdowns":
+            break;
+        default:
+
+    }
+}
+
+function answerSelected() {
+    let res = false;
+
+    switch (question.question_type) {
+        case "select_images":
+            $('.answer-option').each(function (i, obj) {
+                res = res || $(this).hasClass("selected-answer");
+            });
+            break;
+        case "dropdowns":
+            res = true;
+            break;
+    }
+
+    return res;
+}
+
+function displayAnswerResults() {
+    let score = 0;
+    switch (question.question_type) {
+        case "select_images":
+            $('.answer-option').each(function (i, obj) {
+                $(this).removeClass("answer-option");
+                if (typeof $(this).attr("data-correct") !== 'undefined') {
+                    if ($(this).hasClass("selected-answer")) {
+                        score++;
+                    }
+                    $(this).addClass("correct-answer");
+                } else if ($(this).hasClass("selected-answer")) {
+                    score--;
+                    $(this).addClass("incorrect-answer");
+                }
+            });
+            score = Math.max(score, 0);
+            break;
+        case "dropdowns":
+            console.log(question.body.left);
+            console.log($("#left-dropdown").find(":selected").val());
+
+            if (question.body.left.includes($("#left-dropdown").find(":selected").val())) {
+                $("#left-dropdown").addClass("correct-answer");
+                score++;
+            } else {
+                $("#left-dropdown").addClass("incorrect-answer");
+                let feedback = `Correct answers: ${question.body.left.join(", ")}`;
+                $("#left-feedback").html(feedback);
+            }
+            if (question.body.right.includes($("#right-dropdown").find(":selected").val())) {
+                $("#right-dropdown").addClass("correct-answer");
+                score++;
+            } else {
+                $("#right-dropdown").addClass("incorrect-answer");
+                let feedback = `Correct answers: ${question.body.left.join(", ")}`;
+                $("#right-feedback").html(feedback);
+            }
+            break;
+        default:
+    }
+    sendScore(score, 2);
 }
 
 function isNextDisabled() {
-    // no answer options = we are on a result screen
-    if (isResultScreen()) {
+    if (isResultScreen) {
         return false;
     }
 
-    // TODO: incorporate checks on other question formats
     return !answerSelected();
 }
 
 function nextQuestion() {
-    if (question.id < 4) {
+    if (question.id < num_questions - 1) {
         window.location.href = `/quiz/${question.id + 1}`;
     } else {
         window.location.href = "/result";
     }
 }
 
-function displayAnswerResults() {
-    let score = 0;
-    $('.answer-option').each(function (i, obj) {
-        $(this).removeClass("answer-option");
-        if (typeof $(this).attr("data-correct") !== 'undefined') {
-            if ($(this).hasClass("selected-answer")) {
-                score++;
-            }
-            $(this).addClass("correct-answer");
-        } else if ($(this).hasClass("selected-answer")) {
-            score--;
-            $(this).addClass("incorrect-answer");
-        }
-    });
-    score = Math.max(score, 0);
-    sendScore(score, 2);
-}
+
 
 function sendScore(score, maxScore, timeTaken) {
     clearInterval(timerInterval);
@@ -129,24 +173,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 $(document).ready(function () {
     // on startup
-    generateImagePositions();
+    loadQuestion();
     $("#next-btn").prop("disabled", isNextDisabled());
 
-    // // go to previous page or go back to the home page
-    // $("#back-btn").click(function () {
-    //     if (question.id > 0) {
-    //         window.location.href = `/quiz/${question.id - 1}`;
-    //     } else {
-    //         window.location.href = "/";
-    //     }
-    // });
-
     $("#next-btn").click(function () {
-        if (isResultScreen()) {
+        if (isResultScreen) {
             nextQuestion();
         } else {
             displayAnswerResults();
         }
+        isResultScreen = !isResultScreen;
     });
 
     $(".answer-option").click(function () {

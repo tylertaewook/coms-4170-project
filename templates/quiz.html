@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='lesson.css')}}" />
 <script>
   let question = {{ question | tojson}}
+  let num_questions = {{num_questions}}
 </script>
 
 <div class="viewboard">
@@ -36,8 +37,9 @@
 
   <!-- Body -->
   <div class="row mb-2 d-flex justify-content-center">
-    <div>
-      <!-- TODO: incorporate diff question types -->
+    <div id="body">
+      {% if question.question_type == "select_images" %}
+
       <div class="row mb-1">
         <div class="col-6 answer-col"></div>
         <div class="col-6 answer-col"></div>
@@ -46,6 +48,49 @@
         <div class="col-6 answer-col"></div>
         <div class="col-6 answer-col"></div>
       </div>
+
+      {% elif question.question_type == "dropdowns" %}
+
+      <div class="row mb-3">
+        <img src="../static/images/{{ question.body.image }}"/>
+      </div>
+      <div class="row mb-1">
+        <div class="col d-flex justify-content-center">
+            <div class="mr-1">
+              Left: 
+            </div>
+            <select id="left-dropdown">
+              {% for option in question.body.options %}
+              <option value="{{ option }}">{{ option }}</option>
+              {% endfor %}
+            </select>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <div class="mr-1">
+              Right: 
+            </div>
+            <select id="right-dropdown">
+              {% for option in question.body.options %}
+              <option value="{{ option }}">{{ option }}</option>
+              {% endfor %}
+            </select>
+        </div>
+      </div>
+      <div class="row">
+
+        <div id="left-feedback" class="col">
+
+        </div>
+        <div id="right-feedback" class="col">
+
+        </div>
+      </div>
+
+      {% else %}
+      
+      <!-- TODO: add more question types -->
+      {% endif %}
+
     </div>
   </div>
 

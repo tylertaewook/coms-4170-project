@@ -19,6 +19,49 @@ hold_images = {
    "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg", "pocket/pocket2.jpg","pocket/pocket3.jpg"]
 }
 
+compound_images = [
+   {
+      "id": 0,
+      "image": "compound/akiyo0.jpg",
+      "hold_types": {
+         "left": ["pinch"],
+         "right": ["crimp"]
+      }
+   },
+   {
+      "id": 1,
+      "image": "compound/underclingjug0.jpg",
+      "hold_types": {
+         "left": ["undercling", "jug"],
+         "right": ["undercling", "jug"]
+      }
+   },
+   {
+      "id": 2,
+      "image": "compound/janja0.jpg",
+      "hold_types": {
+         "left": ["crimp", "pinch"],
+         "right": ["crimp"]
+      }
+   },
+   {
+      "id": 3,
+      "image": "compound/tomoa0.jpg",
+      "hold_types": {
+         "left": ["pinch"],
+         "right": ["pinch", "sloper"]
+      }
+   },
+   {
+      "id": 4,
+      "image": "compound/jakob0.jpg",
+      "hold_types": {
+         "left": ["sloper", "pinch"],
+         "right": ["crimp"]
+      }
+   },
+]
+
 hold_info = {
    "jug": {
       "explanation": "Jugs are big holds that you can get most of your hand around. Any holds that are comfortable and easy to grip are called jugs.",
@@ -59,8 +102,15 @@ hold_info = {
          "start": 407,
          "end": 465
       }
+   },
+   "undercling": {
+      "explanation": "Underclings are holds that are oriented downwards, so that you grab them from underneath instead of on top of them.",
+      "video-info" : {
+         "id" :"rPCS1dkiu3k",
+         "start": 180,
+         "end": 222
+      }
    }
-
 }
 
 lessons = [
@@ -77,12 +127,12 @@ lessons = [
    {
       "id": 2,
       "lesson_type": "question",
-      "hold_type": "crimp"
+      "hold_type": "undercling"
    },
    {
       "id": 3,
       "lesson_type": "explain",
-      "hold_type": "crimp"
+      "hold_type": "undercling"
    },
    {
       "id": 4,
@@ -97,52 +147,63 @@ lessons = [
    {
       "id": 6,
       "lesson_type": "question",
-      "hold_type": "pinch"
+      "hold_type": "crimp"
    },
    {
       "id": 7,
       "lesson_type": "explain",
-      "hold_type": "pinch"
+      "hold_type": "crimp"
    },
    {
       "id": 8,
       "lesson_type": "question",
-      "hold_type": "pocket"
+      "hold_type": "pinch"
    },
    {
       "id": 9,
+      "lesson_type": "explain",
+      "hold_type": "pinch"
+   },
+   {
+      "id": 10,
+      "lesson_type": "question",
+      "hold_type": "pocket"
+   },
+   {
+      "id": 11,
       "lesson_type": "explain",
       "hold_type": "pocket"
    }
 ]
 
+question_types = ["select_images", "dropdowns"]
+
 questions = [
    {
       "id": 0,
-      "question_type": "select_image",
+      "question_type": "select_images",
       "hold_type": "jug"
    },
    {
       "id": 1,
-      "question_type": "select_image",
-      "hold_type": "crimp"
+      "question_type": "dropdowns"
    },
    {
       "id": 2,
-      "question_type": "select_image",
-      "hold_type": "sloper"
+      "question_type": "dropdowns"
    },
    {
       "id": 3,
-      "question_type": "select_image",
-      "hold_type": "pinch"
+      "question_type": "dropdowns"
    },
    {
       "id": 4,
-      "question_type": "select_image",
+      "question_type": "select_images",
       "hold_type": "pocket"
    },
 ]
+
+used_images = set()
 
 
 @app.route('/')
@@ -215,10 +276,12 @@ def resetScore():
    global cur_score
    global cur_max
    global start_time
+   global used_images
 
    cur_score = 0
    cur_max = 0
-   start_time = None 
+   start_time = None
+   used_images = set()
    #  sends the current and max score
    return jsonify({ 'score': cur_score, 'max': cur_max })
 
@@ -229,19 +292,30 @@ def quiz(id=0):
    global cur_score
    global cur_max
    global start_time
+   global used_images
    id = int(id)
 
    if id == 0: 
         start_time = datetime.now()
 
    question = questions[int(id)]
-   if question["question_type"] == "select_image":
+   if question["question_type"] == "select_images":
       question["title"] = f'Select holds that look like {question["hold_type"].capitalize()}s'
       question["body"] = {
          "correct": selectRandomCorrect(question["hold_type"]),
          "incorrect": selectRandomIncorrect(question["hold_type"])
       }
-   # TODO: add slightly different structures for different question types
+   elif question["question_type"] == "dropdowns":
+      compound_image = random.choice([image for image in compound_images if image["id"] not in used_images])
+      used_images.add(compound_image["id"])
+      question["title"] = "Select the hold corresponding to each hand"
+      question["body"] = {
+         "image": compound_image["image"],
+         "options": list(hold_info.keys()),
+         "left": compound_image["hold_types"]["left"],
+         "right": compound_image["hold_types"]["right"]
+      }
+   # TODO: add more question types
 
    return render_template('quiz.html', question=question, num_questions=len(questions), cur_score=cur_score, cur_max=cur_max)
 
