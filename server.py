@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort, jsonify
+from flask import Flask, render_template, request, abort, jsonify, url_for
 from datetime import datetime
 import re
 import random
@@ -11,6 +11,11 @@ start_time = None
 end_time = None
 
 # TODO: store images somewhere non local
+results_images = {
+   "pass": ["images/results/pass.jpg"],
+   "fail": ["images/results/fail.jpg"]
+}
+
 hold_images = {
    "jug": ["jug/jug0.jpg","jug/jug1.jpg", "jug/jug2.jpg","jug/jug3.jpg"],
    "crimp": ["crimp/crimp0.jpg","crimp/crimp1.jpg", "crimp/crimp2.jpg","crimp/crimp3.jpg"],
@@ -18,6 +23,7 @@ hold_images = {
    "pinch": ["pinch/pinch0.jpg","pinch/pinch1.jpg", "pinch/pinch2.jpg","pinch/pinch3.jpg"],
    "pocket": ["pocket/pocket0.jpg","pocket/pocket1.jpg", "pocket/pocket2.jpg","pocket/pocket3.jpg"],
    "undercling": ["undercling/undercling0.jpg","undercling/undercling1.jpg", "undercling/undercling2.jpg","undercling/undercling3.jpg"]
+
 }
 
 compound_images = [
@@ -62,6 +68,8 @@ compound_images = [
       }
    },
 ]
+
+
 
 hold_info = {
    "jug": {
@@ -331,8 +339,12 @@ def result():
    duration = (end_time - start_time).total_seconds() if start_time else 0
    duration_str = str(int(duration // 3600)).zfill(2) + ":" + str(int((duration % 3600) // 60)).zfill(2) + ":" + str(int(duration % 60)).zfill(2)
 
+   # Determine result image based on score
+   result_type = "pass" if cur_score >= cur_max * 0.6 else "fail"  # Assuming 60% is the threshold
+   result_image = url_for('static', filename=f'{results_images[result_type][0]}')
 
-   return render_template("result.html", score=cur_score, max=cur_max, duration=duration_str)
+   return render_template("result.html", score=cur_score, max=cur_max, duration=duration_str, result_image=result_image)
+
   
 
    
