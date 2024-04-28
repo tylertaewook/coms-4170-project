@@ -172,24 +172,51 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 $(document).ready(function () {
-    // on startup
     loadQuestion();
-    $("#next-btn").prop("disabled", isNextDisabled());
 
+    // Handle click event on the 'Next' button
     $("#next-btn").click(function () {
-        if (isResultScreen) {
-            nextQuestion();
+        if (!isResultScreen && !answerSelected()) {
+            // Display the error message if no answer is selected
+            $("#error-message").show();
         } else {
-            displayAnswerResults();
+            // Proceed as normal if an answer is selected
+            $("#error-message").hide(); // Hide error message in case it was shown previously
+            if (isResultScreen) {
+                nextQuestion();
+            } else {
+                displayAnswerResults();
+                isResultScreen = !isResultScreen;
+            }
         }
-        isResultScreen = !isResultScreen;
     });
 
+    // Handle click event on answer options
     $(".answer-option").click(function () {
-        // highlight/unhighlight selected answer
         $(this).toggleClass("selected-answer");
-
-        // if any answer is selected, enable the next button
-        $("#next-btn").prop("disabled", isNextDisabled());
+        
+        // Optionally update the button's enabled state
+        // (You can also remove this if you want the button always enabled)
+        $("#next-btn").prop("disabled", false);
+        
+        // Hide error message when an answer is selected
+        if (answerSelected()) {
+            $("#error-message").hide();
+        }
     });
-})
+});
+
+function answerSelected() {
+    let selected = false;
+    switch (question.question_type) {
+        case "select_images":
+            $('.answer-option').each(function () {
+                if ($(this).hasClass("selected-answer")) selected = true;
+            });
+            break;
+        case "dropdowns":
+            selected = $("#left-dropdown").val() !== "" && $("#right-dropdown").val() !== "";
+            break;
+    }
+    return selected;
+}
