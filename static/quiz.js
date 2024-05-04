@@ -82,7 +82,7 @@ function displayAnswerResults() {
                 score++;
             } else {
                 $("#right-dropdown").addClass("incorrect-answer");
-                let feedback = `Correct answers: ${question.body.left.join(", ")}`;
+                let feedback = `Correct answers: ${question.body.right.join(", ")}`;
                 $("#right-feedback").html(feedback);
             }
             break;
